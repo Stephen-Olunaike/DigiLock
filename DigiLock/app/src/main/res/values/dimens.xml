@@ -1,0 +1,59 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="universal_sixzerozero">600dp</dimen>
+    <dimen name="universal_fourfivezero">450dp</dimen>
+    <dimen name="universal_threezerozero">300dp</dimen>
+    <dimen name="universal_twoninezero">290dp</dimen>
+    <dimen name="universal_twoeightzero">280dp</dimen>
+    <dimen name="universal_twosevenzero">270dp</dimen>
+    <dimen name="universal_twofivezero">250dp</dimen>
+    <dimen name="universal_twofourzero">240dp</dimen>
+    <dimen name="universal_twothreezero">230dp</dimen>
+    <dimen name="universal_twotwozero">220dp</dimen>
+    <dimen name="universal_twozerozero">200dp</dimen>
+    <dimen name="universal_onesevenzero">170dp</dimen>
+    <dimen name="universal_onefivezero">150dp</dimen>
+    <dimen name="universal_onefourzero">140dp</dimen>
+    <dimen name="universal_onethreezero">130dp</dimen>
+    <dimen name="universal_onetwozero">120dp</dimen>
+    <dimen name="universal_ninty">90dp</dimen>
+    <dimen name="universal_onezerozero">100dp</dimen>
+    <dimen name="universal_eighty">80dp</dimen>
+    <dimen name="universal_seventy">70dp</dimen>
+    <dimen name="universal_sixtyfive">65dp</dimen>
+    <dimen name="universal_sixty">60dp</dimen>
+    <dimen name="universal_fiftynine">59dp</dimen>
+    <dimen name="universal_fiftyfive">55dp</dimen>
+    <dimen name="universal_fifty">50dp</dimen>
+    <dimen name="universal_fortyfive">45dp</dimen>
+    <dimen name="universal_forty">40dp</dimen>
+    <dimen name="universal_thirtyfive">35dp</dimen>
+    <dimen name="universal_thirty">30dp</dimen>
+    <dimen name="universal_thirtytwo">32dp</dimen>
+    <dimen name="universal_twentyfive">25dp</dimen>
+    <dimen name="universal_twenty">20dp</dimen>
+    <dimen name="universal_fifteen">15dp</dimen>
+    <dimen name="universal_fourteen">14dp</dimen>
+    <dimen name="universal_thirteen">13dp</dimen>
+    <dimen name="universal_twelve">12dp</dimen>
+    <dimen name="universal_ten">10dp</dimen>
+    <dimen name="universal_eight">8dp</dimen>
+    <dimen name="universal_five">5dp</dimen>
+    <dimen name="universal_four">4dp</dimen>
+    <dimen name="universal_three">3dp</dimen>
+    <dimen name="universal_one">1dp</dimen>
+
+    <dimen name="text_five">5sp</dimen>
+    <dimen name="text_seven">7sp</dimen>
+    <dimen name="text_ten">10sp</dimen>
+    <dimen name="text_twelve">12sp</dimen>
+    <dimen name="text_fourteen">14sp</dimen>
+    <dimen name="text_seventeen">17sp</dimen>
+    <dimen name="text_twenty">20sp</dimen>
+    <dimen name="text_twentyfive">25sp</dimen>
+    <dimen name="text_thirty">30sp</dimen>
+    <dimen name="text_thirtyfive">35sp</dimen>
+
+</resources>
