@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.stephen.digilock.Fingerprint;
+package com.stephen.digilock.Lock;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -34,8 +34,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.stephen.digilock.Fingerprint.BaseActivity;
-import com.stephen.digilock.Fingerprint.FingerprintUiHelper;
+import com.stephen.digilock.Database.DGDatabase;
+import com.stephen.digilock.Database.DGDatabaseHelper;
+import com.stephen.digilock.Models.Maker;
 import com.stephen.digilock.R;
 
 
@@ -194,7 +195,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
                 mStage = Stage.FINGERPRINT;
             }
         }
-        mPassword.setText("");
+
         mActivity.onLogin(false /* without Fingerprint */, null);
     }
 
@@ -204,7 +205,11 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
     private boolean checkPassword(String password) {
         // Assume the password is always correct.
         // In the real world situation, the password needs to be verified in the server side.
-        return password.length() == 0;
+        DGDatabase database = new DGDatabase(getContext());
+
+        Maker maker = database.getMaker();
+
+        return maker.getSecret().equals(password);
     }
 
     private final Runnable mShowKeyboardRunnable = new Runnable() {

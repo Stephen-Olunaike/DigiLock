@@ -76,7 +76,15 @@ public class Maker {
         this.secret = secret;
     }
 
+    public Maker(String secret) {
+        this.secret = secret;
+    }
+
     private ArrayList<String> features = new ArrayList<>();
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getId() {
         return id;

@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.stephen.digilock.Fingerprint;
+package com.stephen.digilock.Lock;
 
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.CancellationSignal;

@@ -24,23 +24,31 @@ public class DGDatabase {
         this.context = context;
     }
 
-    public void addMaker(Maker m) {
+    public Maker addMaker(Maker m) {
         SQLiteDatabase database = new DGDatabaseHelper(context).getWritableDatabase();
 
         ContentValues values = Maker.getContentValues(m);
 
-        database.insert(MakerTable.MAKER, null, values);
+        Log.d(DG_DEBUG, "Adding KeyMaker");
+        long id = database.insert(MakerTable.MAKER, null, values);
+
+        m.setId(id);
+
+        return m;
     }
 
     public void updateMaker(Maker m) {
         SQLiteDatabase database = new DGDatabaseHelper(context).getWritableDatabase();
 
-        String id = Long.toString(m.getId());
-
         ContentValues values = Maker.getContentValues(m);
 
+        String selection = "[Id]=?";
+
+        String selectionArgs[] = {Long.toString(m.getId())};
+
+        Log.d(DG_DEBUG, "Updating KeyMaker");
         database.update(MakerTable.MAKER, values,
-                MakerTable.MakerCols.ID + " = ?", new String[] {id});
+                selection, selectionArgs);
     }
 
     public Maker getMaker() {
@@ -53,7 +61,6 @@ public class DGDatabase {
         String selectionArgs[] = {};
 
         Log.d(DG_DEBUG, "Getting KeyMaker");
-
         Cursor cursor = database.rawQuery(selection, selectionArgs);
 
         Maker maker = null;
@@ -67,8 +74,6 @@ public class DGDatabase {
         } finally {
             cursor.close();
         }
-
-        Log.d(DG_DEBUG, "Extracted " + Long.toString(maker.getId()));
 
         return maker;
     }

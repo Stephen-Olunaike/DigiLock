@@ -1,5 +1,6 @@
-package com.stephen.digilock.Fingerprint;
+package com.stephen.digilock.Lock;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -17,12 +18,17 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.stephen.digilock.Database.DGDatabase;
 import com.stephen.digilock.Models.KeyMaker;
 import com.stephen.digilock.Models.Maker;
 import com.stephen.digilock.R;
+import com.stephen.digilock.ViewController.PasswordsActivity;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -54,6 +60,10 @@ public class BaseActivity extends AppCompatActivity {
     private KeyGenerator mKeyGenerator;
     private SharedPreferences mSharedPreferences;
 
+    private EditText enterPasswordEdit, reenterPasswordEdit;
+
+    private DGDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,14 +92,14 @@ public class BaseActivity extends AppCompatActivity {
             throw new RuntimeException("Failed to get an instance of KeyGenerator", e);
         }
         Cipher defaultCipher;
-        Cipher cipherNotInvalidated;
+        //Cipher cipherNotInvalidated;
         try {
             defaultCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
                     + KeyProperties.BLOCK_MODE_CBC + "/"
                     + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-            cipherNotInvalidated = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
+            /*cipherNotInvalidated = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
                     + KeyProperties.BLOCK_MODE_CBC + "/"
-                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);*/
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             throw new RuntimeException("Failed to get an instance of Cipher", e);
         }
@@ -137,20 +147,53 @@ public class BaseActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             return;
         }
+
         createKey(DEFAULT_KEY_NAME, true);
         createKey(KEY_NAME_NOT_INVALIDATED, false);
 
-        DGDatabase database = new DGDatabase(getApplicationContext());
+        database = new DGDatabase(getApplicationContext());
         Maker maker = database.getMaker();
 
         if (maker != null) {
+            KeyMaker.getInstance().setMaker(maker);
             setupFragmentToScanFingerprint(defaultCipher, DEFAULT_KEY_NAME);
+
+        } else {
+            LinearLayout enterPasswordLayout = (LinearLayout) findViewById(R.id.base_enterpasswordlayout);
+            enterPasswordLayout.setVisibility(View.VISIBLE);
+
+            enterPasswordEdit = (EditText) findViewById(R.id.base_enterpasswordedit);
+            reenterPasswordEdit = (EditText) findViewById(R.id.base_reenterpasswordedit);
+
+            Button okButton = (Button) findViewById(R.id.base_okbutton);
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String password = enterPasswordEdit.getText().toString();
+                    String confirmpassword = reenterPasswordEdit.getText().toString();
+
+                    if (password.equals(confirmpassword)) {
+                        Maker m = database.addMaker(new Maker(password));
+                        KeyMaker.getInstance().setMaker(m);
+
+                        onLogin(false, null);
+
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                "Passwords do not match",
+                                Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
         }
 
         /*purchaseButton.setEnabled(true);
         purchaseButton.setOnClickListener(
                 new PurchaseButtonClickListener(defaultCipher, DEFAULT_KEY_NAME));*/
     }
+
 
     /**
      * Initialize the {@link Cipher} instance with the created key in the
@@ -209,7 +252,7 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         Log.d("DEBUG", "Password Login Successful");
-        Intent i = new Intent(this, BaseActivity.class);
+        Intent i = new Intent(this, PasswordsActivity.class);
         startActivity(i);
         finish();
     }
